@@ -1,2 +1,3 @@
-# logging
-C++ logging library
+# `logging`
+
+`logging` is a simple C++ logging library.
