@@ -14,10 +14,9 @@ namespace logging {
     void init();
     void shutdown();
 
-
-    
     template <typename ...Ts>
-    void info(Message message, Ts...);
+    void info(Message message, Ts...) {
+    }
     
     void debug(Message message, ...);
     void warning(Message message, ...);

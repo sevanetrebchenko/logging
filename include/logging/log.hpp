@@ -10,7 +10,7 @@
 namespace logging {
     
     struct Log {
-        Message message; // readonly
+        std::string message; // readonly
         MessageLevel level;
         
         datetime::Timestamp dt;
