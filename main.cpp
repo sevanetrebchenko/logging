@@ -1,10 +1,10 @@
 
-#include "logging/logging.hpp"
-#include <string>
+#include "logging/format.hpp"
 
 int main() {
-    logging::add_format_specifier<double>('c', [](const double& value) -> std::string {
+    logging::add_format_specifier("c", +[](const int& value) -> std::string {
+        return "test";
     });
-    logging::info("asdf %i", 10);
+    
     return 0;
 }

@@ -14,8 +14,7 @@ namespace logging {
     void init();
     void shutdown();
 
-    template <typename T>
-    void add_format_specifier(char specifier, std::function<std::string(const T&)> func);
+
     
     template <typename ...Ts>
     void info(Message message, Ts...);
