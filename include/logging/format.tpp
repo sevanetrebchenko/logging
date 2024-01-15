@@ -17,19 +17,19 @@ namespace logging {
         template <typename T>
         class TypeFormatter final : public Formatter {
             public:
-                explicit TypeFormatter(std::string (*formatter)(const T&));
+                explicit TypeFormatter(std::function<std::string(const T&)> formatter);
                 ~TypeFormatter() override;
             
             private:
                 [[nodiscard]] std::string format(const void* object) const override;
-                std::string (*m_formatter)(const T&);
+                std::function<std::string(const T&)> m_formatter;
         };
         
         // TypeFormatter definitions
         template <typename T>
-        TypeFormatter<T>::TypeFormatter(std::string (*formatter)(const T&)) : Formatter(),
-                                                                              m_formatter(std::move(formatter))
-                                                                              {
+        TypeFormatter<T>::TypeFormatter(std::function<std::string(const T&)> formatter) : Formatter(),
+                                                                                          m_formatter(std::move(formatter))
+                                                                                          {
         }
         
         template <typename T>
@@ -45,14 +45,14 @@ namespace logging {
     }
     
     template <typename T>
-    void add_format_specifier(const std::string& specifier, std::string (*formatter)(const T&)) {
+    void add_format_specifier(const std::string& specifier, std::function<std::string(const T&)> formatter) {
         using namespace internal;
-        
+
         // TODO: check for collision with standard format specifier strings
-        
+
         auto iter = formatters.find(specifier);
         if (iter == formatters.end()) {
-            formatters[specifier] = std::make_unique<TypeFormatter<T>>(formatter); // Potential
+            formatters[specifier] = std::make_unique<TypeFormatter<T>>(std::move(formatter));
         }
     }
 
