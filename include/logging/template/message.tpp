@@ -4,9 +4,7 @@
 
 namespace logging {
     
-    template <typename ...Args>
-    std::string Message::format(const Args&... args) const {
-    }
+
     
 }
 

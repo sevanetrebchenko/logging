@@ -1,14 +1,14 @@
 
 #include "logging/format.hpp"
 #include "logging/logging.hpp"
-#include <stdexcept>
-#include <iostream>
 
 int main() {
-    logging::add_format_specifier<int>("c", [](const int& value) -> std::string {
-        return "test";
-    });
+    int hour = 4;
+    int minute = 19;
     
-    logging::info("counter value: {}", 0);
+    logging::info("this is a test formatted string. positional arguments {0} and {1}, named arguments {hour}:{minute}", 10, 20).format(logging::format::arg("hour", hour), logging::format::arg("minute", minute));
+    
     return 0;
 }
+
+

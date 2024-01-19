@@ -7,7 +7,7 @@ namespace logging {
     Message::Message(const char* format, std::source_location source) : m_format(format),
                                                                         m_source(source)
                                                                         {
-        unsigned length = strlen(format);
+        std::size_t length = strlen(format);
         bool open = false;
         unsigned start = 0u;
         

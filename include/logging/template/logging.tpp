@@ -10,16 +10,7 @@
 #include <functional>
 
 namespace logging {
-    
-    // Formatter implementation
-    template <typename ...Args>
-    void Formatter::format(const Args& ...args) const {
-    }
-    
-    template <typename ...Args>
-    Formatter info(Message message, const Args&...) {
-    }
-    
+
 }
 
 #endif // LOGGING_LOGGING_TPP
