@@ -4,6 +4,7 @@
 
 #include <memory> // std::unique_ptr
 #include <unordered_map> // std::unordered_map
+#include <typeindex>
 
 namespace logging {
     
@@ -40,20 +41,16 @@ namespace logging {
             return m_formatter(*reinterpret_cast<const T*>(object));
         }
         
-        extern std::unordered_map<std::string, std::unique_ptr<Formatter>> formatters;
+        extern std::unordered_map<std::type_index, std::unique_ptr<Formatter>> formatters;
         
     }
     
     template <typename T>
-    void add_format_specifier(const std::string& specifier, std::function<std::string(const T&)> formatter) {
+    void register_type_formatter(std::function<std::string(const T&)> formatter) {
         using namespace internal;
-
-        // TODO: check for collision with standard format specifier strings
-
-        auto iter = formatters.find(specifier);
-        if (iter == formatters.end()) {
-            formatters[specifier] = std::make_unique<TypeFormatter<T>>(std::move(formatter));
-        }
+        using Type = std::remove_cv<typename std::remove_reference<T>::type>::type;
+        std::type_index type = typeid(Type);
+        formatters[type] = std::make_unique<TypeFormatter<T>>(std::move(formatter)); // Potential overwrite.
     }
 
 }
