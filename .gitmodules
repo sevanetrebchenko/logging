@@ -1,3 +1,6 @@
 [submodule "lib/datetime"]
 	path = lib/datetime
 	url = git@github.com:sevanetrebchenko/datetime.git
+[submodule "lib/utils"]
+	path = lib/utils
+	url = git@github.com:sevanetrebchenko/utils.git
