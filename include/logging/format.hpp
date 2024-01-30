@@ -6,7 +6,6 @@
 #include <functional> // std::function
 
 namespace logging {
-    
     namespace format {
         
         // Namespace clashes with std::format if using namespace std; is used, so don't :)
@@ -22,9 +21,6 @@ namespace logging {
         void register_type_formatter(std::function<std::string(const T&)> formatter);
         
     }
-    
-
-    
 }
 
 // Template definitions.

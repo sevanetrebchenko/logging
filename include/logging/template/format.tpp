@@ -41,7 +41,14 @@ namespace logging {
             return m_formatter(*reinterpret_cast<const T*>(object));
         }
         
-        extern std::unordered_map<std::type_index, std::unique_ptr<Formatter>> formatters;
+        extern std::unordered_map<std::type_index, std::shared_ptr<Formatter>> formatters;
+        
+        template <typename T>
+        std::shared_ptr<Formatter> get_type_formatter() {
+            using Type = std::remove_cv<typename std::remove_reference<T>::type>::type;
+            auto iter = formatters.find(typeid(Type));
+            return iter == formatters.end() ? std::shared_ptr<Formatter>(nullptr) : iter->second;
+        }
         
     }
     
@@ -49,8 +56,7 @@ namespace logging {
     void register_type_formatter(std::function<std::string(const T&)> formatter) {
         using namespace internal;
         using Type = std::remove_cv<typename std::remove_reference<T>::type>::type;
-        std::type_index type = typeid(Type);
-        formatters[type] = std::make_unique<TypeFormatter<T>>(std::move(formatter)); // Potential overwrite.
+        formatters[typeid(Type)] = std::make_shared<TypeFormatter<T>>(std::move(formatter)); // Potential overwrite.
     }
 
 }
